@@ -1,0 +1,27 @@
+<%- include('partials/header.ejs') %> <%- include('partials/navbar.ejs') %>
+
+<div class="container">
+  <% if (typeof message_list != 'undefined') { %>
+  <div class="mt-2 border rounded p-3">
+    <% message_list.forEach((message,index) => { %>
+    <h3 class="author">
+      <%=typeof currentUser != 'undefined' ? message.author.username :
+      'Anonymous'%>
+    </h3>
+    <p class="content"><%- message.content %></p>
+    <p class="date">
+      <%=typeof currentUser != 'undefined' ? message.timestamp_formatted :
+      "Unknowned date"%>
+    </p>
+    <% if (typeof currentUser != 'undefined' && currentUser.member_status ===
+    'Admin') { %>
+    <a href="<%=message.url%>/delete" class="btn btn-danger">Delete</a>
+    <% } %> <% if (index < message_list.length -1 ) { %>
+    <hr />
+    <% }}) %>
+  </div>
+  <% } %>
+  <a href="/messages/new">Send a new message</a>
+</div>
+
+<%-include('partials/footer.ejs') %>
